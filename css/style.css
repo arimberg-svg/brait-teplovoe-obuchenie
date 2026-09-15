@@ -150,6 +150,26 @@ a:hover { text-decoration: underline; }
 }
 .hero p { margin: 0; max-width: 720px; color: #ddd; line-height: 1.5; }
 
+.byline {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.byline b { color: var(--ink); font-weight: 700; }
+
+.site-link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--brait-red);
+  color: #fff !important;
+  text-decoration: none !important;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 18px;
+  border-radius: 8px;
+}
+.site-link:hover { background: var(--brait-red-dark); }
+
 h1, h2, h3 {
   font-family: "Roboto Flex", "Roboto", sans-serif;
   font-weight: 750;
