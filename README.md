@@ -4,7 +4,9 @@
 
 Открыть локально: файл `index.html` в браузере.
 
-Онлайн (GitHub Pages): после публикации репозитория включите Pages в настройках (Source: Deploy from a branch → `main` → `/ (root)`).
+Публичный репозиторий: https://github.com/arimberg-svg/brait-teplovoe-obuchenie
+
+Онлайн: https://arimberg-svg.github.io/brait-teplovoe-obuchenie/
 
 ## Что внутри
 
