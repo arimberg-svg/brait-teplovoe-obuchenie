@@ -63,6 +63,7 @@
     const a = accById[extra.id] || { name: extra.id, sku: "" };
     return `<article class="card acc-card ${extra.must ? "must" : ""}">
       ${extra.must ? `<div class="must-flag">Обязательно предлагать</div>` : ""}
+      ${a.image ? `<div class="photo-stage extra-photo"><img src="${a.image}" alt="${a.name}"></div>` : ""}
       <h3>${a.name}<span class="sku">${a.sku || ""}</span></h3>
       <div class="why"><b>Зачем к ${product.name}:</b> ${extra.why}</div>
     </article>`;

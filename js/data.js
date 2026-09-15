@@ -38,7 +38,7 @@ window.BRAIT = (function () {
 
   const accessories = [
     { id: "heat-sleeve", name: "Рукав тепловой гибкий для теплогенераторов (диам. 350, длина 6 м)", sku: "доп к BR-22AIW", group: "непрямой", mustFor: "BR-22AIW" },
-    { id: "rk-1", name: "Ремкомплект портативной дизельной пушки BRAIT RK-1", sku: "25.02.197.120", group: "запчасти", mustFor: "BPH-8000TH" },
+    { id: "rk-1", name: "Ремкомплект портативной дизельной пушки BRAIT RK-1", sku: "25.02.197.120", group: "запчасти", mustFor: "BPH-8000TH", image: "images/products/rk-1.jpg" },
     { id: "gas-hose", name: "Газовый шланг с штуцерами", sku: "доп", group: "газ" },
     { id: "gas-reducer", name: "Редуктор пропановый 0,7 бар", sku: "доп", group: "газ" },
     { id: "gas-bottle", name: "Баллон пропановый (50 л / 27 л)", sku: "доп", group: "газ" },
