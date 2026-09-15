@@ -8,6 +8,10 @@
   function route() {
     const hash = decodeURIComponent(location.hash.replace(/^#/, "") || "home");
     const [kind, id] = hash.split("/");
+    if (kind === "product" && id === "rk-1") {
+      location.hash = "product/bph-8000th";
+      return;
+    }
     if (kind === "product" && id) return renderProduct(id);
     if (kind === "brand") return renderBrand();
     if (kind === "sell") return renderSell();
@@ -28,12 +32,13 @@
         const hash = g.id === "home" ? "home" : g.id;
         return `<a class="nav-link" data-hash="${hash}" href="#${hash}">${g.title}</a>`;
       }
-      const items = products.filter((p) => p.group === g.id).map((p) => `
+      const items = products.filter((p) => p.group === g.id);
+      if (!items.length) return "";
+      return `<details class="nav-section" open>
+        <summary>${g.title}</summary>${items.map((p) => `
         <button class="tab" data-hash="product/${p.id}" type="button">
           ${p.name}<small>${p.power} · ${p.heat}</small>
-        </button>`).join("");
-      return `<details class="nav-section" open>
-        <summary>${g.title}</summary>${items}
+        </button>`).join("")}
       </details>`;
     }).join("");
 
@@ -51,13 +56,22 @@
   }
 
   function hero(title, text) {
-    return `<div class="hero"><h1>${title}</h1><p>${text}</p></div>`;
+    return `<div class="hero"><h1>${title}</h1>${text ? `<p>${text}</p>` : ""}</div>`;
+  }
+
+  function extraCard(product, extra) {
+    const a = accById[extra.id] || { name: extra.id, sku: "" };
+    return `<article class="card acc-card ${extra.must ? "must" : ""}">
+      ${extra.must ? `<div class="must-flag">Обязательно предлагать</div>` : ""}
+      <h3>${a.name}<span class="sku">${a.sku || ""}</span></h3>
+      <div class="why"><b>Зачем к ${product.name}:</b> ${extra.why}</div>
+    </article>`;
   }
 
   function renderHome() {
     setActive("home");
     root.innerHTML = `
-      ${hero("Обучение по тепловому оборудованию BRAIT", "Курс по нашей витрине: 11 артикулов, как закрывать сделку и какие допы класть в чек. К BR-22AIW обязательно рукав Ø350 мм / 6 м. К BPH-8000TH обязательно ремкомплект RK-1.")}
+      ${hero("Обучение по тепловому оборудованию BRAIT")}
       <div class="chips">
         <button class="chip" data-go="product/bgh-20m">Потолки / газ → BGH-20M</button>
         <button class="chip" data-go="product/br-22a">Стройка без людей → дизель прямой</button>
@@ -135,28 +149,19 @@
 
   function renderExtras() {
     setActive("extras");
+    const rest = products.map((p) => {
+      const extras = p.extras.filter((e) => !e.must);
+      if (!extras.length) return "";
+      return `<h2>${p.name} · ${p.sku}</h2>
+        <p class="muted" style="margin-top:-6px">${p.title}</p>
+        <div class="grid-2">${extras.map((e) => extraCard(p, e)).join("")}</div>`;
+    }).join("");
+    const mustBlocks = products.flatMap((p) => p.extras.filter((e) => e.must).map((e) => extraCard(p, e)));
     root.innerHTML = `
-      ${hero("Сопутствующий товар", "Два допа обязательны. Остальное — по сценарию модели.")}
-      <div class="grid-2">
-        <article class="card must">
-          <div class="must-flag">Обязательно предлагать</div>
-          <h3>К BR-22AIW</h3>
-          <p><b>Рукав тепловой гибкий для теплогенераторов (диам. 350, длина 6 м)</b></p>
-          <p>Непрямой нагрев 22 кВт без рукава греет только зону перед пушкой. Рукав относит чистый воздух на 6 метров туда, где люди и товар.</p>
-          <p><button class="chip" data-go="product/br-22aiw">Открыть BR-22AIW</button></p>
-        </article>
-        <article class="card must">
-          <div class="must-flag">Обязательно предлагать</div>
-          <h3>К BPH-8000TH</h3>
-          <p><b>Ремкомплект портативной дизельной пушки BRAIT RK-1</b> · арт. 25.02.197.120</p>
-          <p>К портативной пушке 5–8 кВт дополнительно есть RK-1. Кладём в тот же чек: расходники первой зимы, клиент не встанет в январе.</p>
-          <p><button class="chip" data-go="product/rk-1">Открыть RK-1</button> <button class="chip" data-go="product/bph-8000th">Открыть BPH-8000TH</button></p>
-        </article>
-      </div>
+      ${hero("Допы: что класть в чек")}
+      <div class="grid-2">${mustBlocks.join("")}</div>
       <h2>Остальные допы</h2>
-      <div class="cards grid-2">
-        ${accessories.filter((a) => a.id !== "heat-sleeve" && a.id !== "rk-1").map((a) => `<article class="card acc-card"><h3>${a.name}<span class="sku">${a.sku} · ${a.group}</span></h3><p class="muted">Зачем именно — на вкладке конкретной пушки.</p></article>`).join("")}
-      </div>
+      ${rest}
     `;
     bindGo(root);
   }
@@ -192,16 +197,7 @@
       <table class="ttx card" style="padding:0">${p.specs.map((row) => `<tr><th>${row[0]}</th><td>${row[1]}</td></tr>`).join("")}</table>
       <h2>Что предложить вместе и зачем</h2>
       <div class="grid-2">
-        ${p.extras.map((e) => {
-          const a = accById[e.id] || { name: e.id, sku: "" };
-          const go = e.productId || a.productId;
-          return `<article class="card acc-card ${e.must ? "must" : ""}">
-            ${e.must ? `<div class="must-flag">Обязательно предлагать</div>` : ""}
-            <h3>${a.name}<span class="sku">${a.sku || ""}</span></h3>
-            <div class="why"><b>Зачем к ${p.name}:</b> ${e.why}</div>
-            ${go ? `<p style="margin:10px 0 0"><button class="chip" data-go="product/${go}">Открыть вкладку ${go.toUpperCase()}</button></p>` : ""}
-          </article>`;
-        }).join("")}
+        ${p.extras.map((e) => extraCard(p, e)).join("")}
       </div>
       <p class="note">ТТХ по каталогу fdbrait.ru. Производитель может менять комплектацию. Перед продажей сверяйте шильдик и накладную.</p>
     `;
