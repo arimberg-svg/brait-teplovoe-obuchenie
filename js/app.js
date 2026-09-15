@@ -61,9 +61,10 @@
 
   function extraCard(product, extra) {
     const a = accById[extra.id] || { name: extra.id, sku: "" };
+    const img = extra.image || a.image;
     return `<article class="card acc-card ${extra.must ? "must" : ""}">
       ${extra.must ? `<div class="must-flag">Обязательно предлагать</div>` : ""}
-      ${a.image ? `<div class="photo-stage extra-photo"><img src="${a.image}" alt="${a.name}"></div>` : ""}
+      ${img ? `<div class="photo-stage extra-photo"><img src="${img}" alt="${a.name}"></div>` : ""}
       <h3>${a.name}<span class="sku">${a.sku || ""}</span></h3>
       <div class="why"><b>Зачем к ${product.name}:</b> ${extra.why}</div>
     </article>`;
@@ -269,9 +270,24 @@
       root.innerHTML = hero("Модель не найдена", "Вернитесь в список слева.");
       return;
     }
+    const extraPhotos = p.extras
+      .filter((e) => e.must)
+      .map((e) => {
+        const a = accById[e.id] || {};
+        const img = e.image || a.image;
+        if (!img) return "";
+        return `<div class="photo-stage extra-photo">
+          <img src="${img}" alt="${a.name || ""}">
+          <div class="photo-cap">${a.name || ""}</div>
+        </div>`;
+      })
+      .join("");
     root.innerHTML = `
       <div class="product-head">
-        <div class="photo-stage"><img src="${p.image}" alt="${p.title}"></div>
+        <div class="photo-col">
+          <div class="photo-stage"><img src="${p.image}" alt="${p.title}"></div>
+          ${extraPhotos}
+        </div>
         <div>
           <p class="kicker">${groupTitle(p.group)}</p>
           <h1>${p.title}</h1>
