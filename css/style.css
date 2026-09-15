@@ -362,11 +362,27 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   margin-bottom: 6px;
 }
 
-.note {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 24px;
+.step-card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 14px;
 }
+.step-num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--brait-red);
+  color: #fff;
+  font-family: "Roboto Flex", "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-card h3 { margin: 4px 0 10px; }
 
 .hidden { display: none !important; }
 
