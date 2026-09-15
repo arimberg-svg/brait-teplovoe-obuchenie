@@ -150,20 +150,68 @@
 
   function renderExtras() {
     setActive("extras");
-    const rest = products.map((p) => {
+    const mustBlocks = products.flatMap((p) => p.extras.filter((e) => e.must).map((e) => extraCard(p, e)));
+
+    const byProduct = products.map((p) => {
       const extras = p.extras.filter((e) => !e.must);
       if (!extras.length) return "";
-      return `<h2>${p.name} · ${p.sku}</h2>
-        <p class="muted" style="margin-top:-6px">${p.title}</p>
-        <div class="grid-2">${extras.map((e) => extraCard(p, e)).join("")}</div>`;
+      return `<article class="card group-card">
+        <div class="group-head">
+          <button class="chip" data-go="product/${p.id}" type="button">${p.name}</button>
+          <span class="sku">${p.sku}</span>
+        </div>
+        <p class="muted group-title">${p.title}</p>
+        ${extras.map((e) => {
+          const a = accById[e.id] || { name: e.id, sku: "" };
+          return `<div class="extra-row">
+            <div class="extra-row-name">${a.name}<span class="sku">${a.sku || ""}</span></div>
+            <div class="why"><b>Зачем:</b> ${e.why}</div>
+          </div>`;
+        }).join("")}
+      </article>`;
     }).join("");
-    const mustBlocks = products.flatMap((p) => p.extras.filter((e) => e.must).map((e) => extraCard(p, e)));
+
+    const extraIndex = {};
+    products.forEach((p) => {
+      p.extras.filter((e) => !e.must).forEach((e) => {
+        if (!extraIndex[e.id]) extraIndex[e.id] = [];
+        extraIndex[e.id].push({ product: p, extra: e });
+      });
+    });
+    const byExtra = accessories.filter((a) => extraIndex[a.id]).map((a) => {
+      const rows = extraIndex[a.id];
+      return `<article class="card group-card">
+        <div class="group-head">
+          <h3>${a.name}</h3>
+          <span class="sku">${a.sku} · ${a.group}</span>
+        </div>
+        ${rows.map(({ product, extra }) => `
+          <div class="extra-row">
+            <div class="extra-row-name"><button class="chip" data-go="product/${product.id}" type="button">${product.name}</button> ${product.sku}</div>
+            <div class="why"><b>Зачем к ${product.name}:</b> ${extra.why}</div>
+          </div>`).join("")}
+      </article>`;
+    }).join("");
+
     root.innerHTML = `
       ${hero("Допы: что класть в чек")}
       <div class="grid-2">${mustBlocks.join("")}</div>
       <h2>Остальные допы</h2>
-      ${rest}
+      <div class="chips">
+        <button class="chip is-on" type="button" data-view="products">По товарам</button>
+        <button class="chip" type="button" data-view="extras">По допам</button>
+      </div>
+      <div id="extras-by-product">${byProduct}</div>
+      <div id="extras-by-extra" class="hidden">${byExtra}</div>
     `;
+    root.querySelectorAll("[data-view]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const view = btn.dataset.view;
+        root.querySelectorAll("[data-view]").forEach((b) => b.classList.toggle("is-on", b === btn));
+        root.querySelector("#extras-by-product").classList.toggle("hidden", view !== "products");
+        root.querySelector("#extras-by-extra").classList.toggle("hidden", view !== "extras");
+      });
+    });
     bindGo(root);
   }
 

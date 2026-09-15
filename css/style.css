@@ -189,7 +189,40 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   font-size: 13px;
   cursor: pointer;
 }
-.chip:hover { border-color: var(--brait-red); color: var(--brait-red); }
+.chip.is-on {
+  background: var(--brait-red);
+  border-color: var(--brait-red);
+  color: #fff;
+}
+
+.group-card {
+  margin-bottom: 14px;
+}
+.group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.group-head h3 { margin: 0; }
+.group-title { margin: 0 0 12px; }
+.extra-row {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.extra-row:first-of-type { border-top: 1px solid var(--line); }
+.extra-row-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.extra-row .why { margin-top: 0; }
 
 .product-head {
   display: grid;
