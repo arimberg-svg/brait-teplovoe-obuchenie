@@ -171,6 +171,31 @@ a:hover { text-decoration: underline; }
 }
 .site-link:hover { background: var(--brait-red-dark); }
 
+.howto {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px 24px 18px;
+  margin: 18px 0 22px;
+}
+.howto h2 {
+  margin: 0 0 16px;
+  font-size: 32px;
+  line-height: 1.2;
+}
+.howto ol {
+  margin: 0;
+  padding: 0 0 0 28px;
+}
+.howto li {
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+.howto li:last-child { margin-bottom: 0; }
+.howto li b { color: var(--ink); }
+
 h1, h2, h3 {
   font-family: "Roboto Flex", "Roboto", sans-serif;
   font-weight: 750;
@@ -455,4 +480,7 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   .search { width: 40vw; }
   .hero { margin: -28px -16px 20px; }
   .content { padding: 20px 16px 48px; }
+  .howto { padding: 18px 16px 14px; }
+  .howto h2 { font-size: 26px; }
+  .howto li { font-size: 16px; }
 }
