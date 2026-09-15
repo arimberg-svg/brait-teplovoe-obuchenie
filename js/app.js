@@ -270,25 +270,10 @@
       root.innerHTML = hero("Модель не найдена", "Вернитесь в список слева.");
       return;
     }
-    const extraPhotos = p.extras
-      .filter((e) => e.must)
-      .map((e) => {
-        const a = accById[e.id] || {};
-        const img = e.image || a.image;
-        if (!img) return "";
-        return `<div class="photo-stage extra-photo">
-          <img src="${img}" alt="${a.name || ""}">
-          <div class="photo-cap">${a.name || ""}</div>
-        </div>`;
-      })
-      .join("");
     root.innerHTML = `
       <div class="product-head">
-        <div class="photo-col">
-          <div class="photo-stage"><img src="${p.image}" alt="${p.title}"></div>
-          ${extraPhotos}
-        </div>
-        <div>
+        <div class="photo-stage"><img src="${p.image}" alt="${p.title}"></div>
+        <div class="product-copy">
           <p class="kicker">${groupTitle(p.group)}</p>
           <h1>${p.title}</h1>
           <div class="meta">
