@@ -59,13 +59,37 @@
     return `<div class="hero"><h1>${title}</h1>${text ? `<p>${text}</p>` : ""}</div>`;
   }
 
+  function extraItem(extra) {
+    const a = accById[extra.id] || { name: extra.id };
+    return {
+      name: extra.name || a.name,
+      sku: extra.sku || a.sku || "",
+      url: extra.url || a.url || "",
+      order: extra.order || a.order || "",
+      image: extra.image || a.image || "",
+      group: a.group || ""
+    };
+  }
+
+  function buyBlock(item) {
+    const sku = item.sku ? `<span class="sku">арт. ${item.sku}</span>` : "";
+    const link = item.url
+      ? `<a class="buy-link" href="${item.url}" target="_blank" rel="noopener">${item.url}</a>`
+      : "";
+    const via = item.order === "catalog"
+      ? `<div class="order-via">Закажи через активный закуп</div>`
+      : "";
+    if (!sku && !link) return "";
+    return `<div class="buy-line">${sku}${link}${via}</div>`;
+  }
+
   function extraCard(product, extra) {
-    const a = accById[extra.id] || { name: extra.id, sku: "" };
-    const img = extra.image || a.image;
+    const a = extraItem(extra);
     return `<article class="card acc-card ${extra.must ? "must" : ""}">
       ${extra.must ? `<div class="must-flag">Обязательно предлагать</div>` : ""}
-      ${img ? `<div class="photo-stage extra-photo"><img src="${img}" alt="${a.name}"></div>` : ""}
-      <h3>${a.name}<span class="sku">${a.sku || ""}</span></h3>
+      ${a.image ? `<div class="photo-stage extra-photo"><img src="${a.image}" alt="${a.name}"></div>` : ""}
+      <h3>${a.name}</h3>
+      ${buyBlock(a)}
       <div class="why"><b>Зачем к ${product.name}:</b> ${extra.why}</div>
     </article>`;
   }
@@ -210,9 +234,10 @@
         </div>
         <p class="muted group-title">${p.title}</p>
         ${extras.map((e) => {
-          const a = accById[e.id] || { name: e.id, sku: "" };
+          const a = extraItem(e);
           return `<div class="extra-row">
-            <div class="extra-row-name">${a.name}<span class="sku">${a.sku || ""}</span></div>
+            <div class="extra-row-name">${a.name}</div>
+            ${buyBlock(a)}
             <div class="why"><b>Зачем:</b> ${e.why}</div>
           </div>`;
         }).join("")}
@@ -231,8 +256,8 @@
       return `<article class="card group-card">
         <div class="group-head">
           <h3>${a.name}</h3>
-          <span class="sku">${a.sku} · ${a.group}</span>
         </div>
+        ${buyBlock(a)}
         ${rows.map(({ product, extra }) => `
           <div class="extra-row">
             <div class="extra-row-name"><button class="chip" data-go="product/${product.id}" type="button">${product.name}</button> ${product.sku}</div>
@@ -243,6 +268,11 @@
 
     root.innerHTML = `
       ${hero("Допы: что класть в чек")}
+      <article class="card red" style="margin-bottom:16px">
+        <h3>Как заказывать доп</h3>
+        <p>Если позиция есть в каталоге продавца — сразу кладите <b>артикул и ссылку</b> и пишите клиенту в зале: <b>закажи через активный закуп</b>.</p>
+        <p>Если этого товара на сайте продавца нет — берите позицию с нашего сайта <a href="https://gvozditut.ru/" target="_blank" rel="noopener">gvozditut.ru</a>: артикул и ссылка на карточку тоже в чек.</p>
+      </article>
       <div class="grid-2">${mustBlocks.join("")}</div>
       <h2>Остальные допы</h2>
       <div class="chips">
