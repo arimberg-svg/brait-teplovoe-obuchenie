@@ -190,13 +190,15 @@
           </ul>
         </div>
       </article>
-      <h2>Чего нельзя обещать</h2>
-      <ul class="list">
-        <li>Прямой дизель и газ — «как батарея в квартире».</li>
-        <li>BFH-2 / BFH-2S на 2 кВт — «прогреет склад».</li>
-        <li>Непрямой нагрев — «можно без трубы и без рукава».</li>
-        <li>Портативную BPH-8000TH — без ремкомплекта RK-1, «запчасти потом».</li>
-      </ul>
+      <section class="forbid">
+        <h2>Чего <span>нельзя</span> обещать</h2>
+        <ul class="list">
+          <li>Прямой дизель и газ — «как батарея в квартире».</li>
+          <li>BFH-2 / BFH-2S на 2 кВт — «прогреет склад».</li>
+          <li>Непрямой нагрев — «можно без трубы и без рукава».</li>
+          <li>Портативную BPH-8000TH — без ремкомплекта RK-1, «запчасти потом».</li>
+        </ul>
+      </section>
     `;
   }
 
@@ -306,7 +308,7 @@
         <div class="photo-stage"><img src="${p.image}" alt="${p.title}"></div>
         <div class="product-copy">
           <p class="kicker">${groupTitle(p.group)}</p>
-          <h1>${p.title}</h1>
+          <h1>${p.shopUrl ? `<a class="shop-product-link" href="${p.shopUrl}" target="_blank" rel="noopener">${p.title}</a>` : p.title}</h1>
           <div class="meta">
             <span class="badge dark">${p.name}</span>
             <span class="badge">${p.power}</span>
