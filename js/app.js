@@ -71,16 +71,18 @@
     };
   }
 
+  function nameLink(item) {
+    if (!item.url) return item.name;
+    return `<a class="buy-link" href="${item.url}" target="_blank" rel="noopener">${item.name}</a>`;
+  }
+
   function buyBlock(item) {
     const sku = item.sku ? `<span class="sku">арт. ${item.sku}</span>` : "";
-    const link = item.url
-      ? `<a class="buy-link" href="${item.url}" target="_blank" rel="noopener">${item.url}</a>`
-      : "";
     const via = item.order === "catalog"
       ? `<div class="order-via">Закажи через активный закуп</div>`
       : "";
-    if (!sku && !link) return "";
-    return `<div class="buy-line">${sku}${link}${via}</div>`;
+    if (!sku && !via) return "";
+    return `<div class="buy-line">${sku}${via}</div>`;
   }
 
   function extraCard(product, extra) {
@@ -88,7 +90,7 @@
     return `<article class="card acc-card ${extra.must ? "must" : ""}">
       ${extra.must ? `<div class="must-flag">Обязательно предлагать</div>` : ""}
       ${a.image ? `<div class="photo-stage extra-photo"><img src="${a.image}" alt="${a.name}"></div>` : ""}
-      <h3>${a.name}</h3>
+      <h3>${nameLink(a)}</h3>
       ${buyBlock(a)}
       <div class="why"><b>Зачем к ${product.name}:</b> ${extra.why}</div>
     </article>`;
@@ -236,7 +238,7 @@
         ${extras.map((e) => {
           const a = extraItem(e);
           return `<div class="extra-row">
-            <div class="extra-row-name">${a.name}</div>
+            <div class="extra-row-name">${nameLink(a)}</div>
             ${buyBlock(a)}
             <div class="why"><b>Зачем:</b> ${e.why}</div>
           </div>`;
@@ -255,7 +257,7 @@
       const rows = extraIndex[a.id];
       return `<article class="card group-card">
         <div class="group-head">
-          <h3>${a.name}</h3>
+          <h3>${nameLink(a)}</h3>
         </div>
         ${buyBlock(a)}
         ${rows.map(({ product, extra }) => `

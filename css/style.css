@@ -365,9 +365,14 @@ h3 { font-size: 16px; margin: 0 0 8px; }
   font-size: 13px;
 }
 .buy-link {
-  font-size: 13px;
   overflow-wrap: anywhere;
   line-height: 1.35;
+}
+.acc-card h3 .buy-link,
+.extra-row-name .buy-link,
+.group-head .buy-link {
+  font: inherit;
+  color: var(--brait-red);
 }
 .order-via {
   display: inline-block;
