@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BRAIT — обучение по тепловому оборудованию</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wght@8..144,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <img class="logo" src="images/logo-white.svg" alt="BRAIT">
+      <div class="brand-text">Обучение · <span>тепловое оборудование</span></div>
+      <div class="search">
+        <input id="search" type="search" placeholder="Найти модель: BR-22AIW, BGH-30, BFH-5D…" autocomplete="off">
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar" id="nav"></aside>
+      <main class="content">
+        <div id="search-box" class="search-results hidden"></div>
+        <div id="app"></div>
+      </main>
+    </div>
+  </div>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
