@@ -37,7 +37,7 @@ window.BRAIT = (function () {
   };
 
   const accessories = [
-    { id: "heat-sleeve", name: "Рукав тепловой гибкий для теплогенераторов (диам. 350, длина 6 м)", sku: "200414-0350-060", url: "", order: "", group: "непрямой", mustFor: "BR-22AIW", image: "images/products/heat-sleeve.jpg" },
+    { id: "heat-sleeve", name: "Рукав тепловой гибкий для теплогенераторов (диам. 350, длина 6 м)", sku: "200414-0350-060", url: "https://gvozditut.ru/products/rukav-teplovoj-gibkij-dlya-teplogeneratorov-diam-350-dlina-6-m/", order: "shop", group: "непрямой", mustFor: "BR-22AIW", image: "images/products/heat-sleeve.jpg" },
     { id: "rk-1", name: "Ремкомплект портативной дизельной пушки BRAIT RK-1", sku: "25.02.197.120", url: "https://gvozditut.ru/products/remkomplekt-portativnoj-dizelnoj-pushki-brait-rk-1/", order: "shop", group: "запчасти", mustFor: "BPH-8000TH", image: "images/products/rk-1.jpg" },
     { id: "gas-hose", name: "Шланг для газовой сварки 9 мм (ацетилен, пропан)", sku: "ГП-РК-03811", url: "https://gvozditut.ru/products/shlang-dlya-gazovoy-svarki-9-mm-atsetilen-propan-/", order: "shop", group: "газ" },
     { id: "gas-reducer", name: "Редуктор пропановый БПО-5-СВ-М", sku: "90100201", url: "https://gvozditut.ru/products/reduktor-propanovyy/", order: "shop", group: "газ" },
